@@ -1,0 +1,27 @@
+---
+# Default values for spire.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+org: docker.io/networkservicemesh
+tag: master
+pullPolicy: IfNotPresent
+
+# workaround since Azure doesn't support by default 10250 security port for kubelet
+azure: false
+namespace: spire
+selfSignedCA: false
+trustDomain: central.com
+
+# federatesWith is going to be the list that contains the specification
+# a spire server uses in order to federate with other spire servers
+############
+# Example:
+#   federatesWith:
+#     - trustDomain: "member1.com"
+#       address: "172.17.254.1"
+#       port: 8443
+#     - trustDomain: "member2.com"
+#       address: "172.17.253.1"
+#       port: 8443
+############
