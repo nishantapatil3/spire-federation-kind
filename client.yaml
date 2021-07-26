@@ -1,53 +1,62 @@
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
+--- 
+apiVersion: v1 
+kind: ServiceAccount 
+metadata: 
   name: client-service-account
-  namespace: default
----
-apiVersion: v1
-kind: Service
-metadata:
-  name:  broker-webapp
-  labels:
-    app:  broker-webapp
-spec:
+  namespace: default 
+--- 
+apiVersion: v1 
+kind: Service 
+metadata: 
+  name:  helloworld-example 
+  labels: 
+    app:  helloworld-example 
+    nsm/role: client 
+spec: 
   type: LoadBalancer
-  ports:
+  ports: 
   - port:  8080
     targetPort: 8080
-    name: http
-  selector:
-    app:  broker-webapp
----
-apiVersion: apps/v1
-kind: Deployment
-spec:
-  selector:
-    matchLabels:
-      bb: web
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        bb: web
-    spec:
-      serviceAccount: client-service-account
-      containers:
-        - name: broker-webapp
-          image: nishantapatil3/broker-webapp:latest
-          command: ["/bin/sleep","infinity"]
-          imagePullPolicy: Always
-          volumeMounts:
-          - mountPath: /run/spire/sockets
-            name: spire-agent-socket
-            readOnly: true
+    nodePort: 30036
+    name: http 
+  selector: 
+    app:  helloworld-example 
+--- 
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+  name:  helloworld-example 
+  labels: 
+    version: v1 
+spec: 
+  replicas: 1 
+  selector: 
+    matchLabels: 
+      app:  helloworld-example 
+      version: v1 
+  template: 
+    metadata: 
+      labels: 
+        app:  helloworld-example 
+        version: v1 
+    spec: 
+      serviceAccount: client-service-account 
+      containers: 
+      - name: helloworld 
+        image: nishantapatil3/broker-webapp:latest
+        command: ["/usr/local/bin/broker-webapp","infinity"] 
+        resources: 
+          requests: 
+            cpu: "100m" 
+        imagePullPolicy: Always 
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /run/spire/sockets
+          name: spire-agent-socket
+          readOnly: true
       volumes:
-        - name: spire-agent-socket
-          hostPath:
-            path: /run/spire/sockets
-            type: DirectoryOrCreate
-metadata:
-  name: "broker-webapp"
-  namespace: default
-
+      - name: spire-agent-socket
+        hostPath:
+          path: /run/spire/sockets
+          type: DirectoryOrCreate
