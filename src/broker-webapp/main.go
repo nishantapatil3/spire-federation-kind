@@ -114,7 +114,7 @@ func GetTLSConfigs(ctx context.Context) ([]*tls.Config, error) {
 	for _, bundle := range bundles.Bundles() {
 		id := bundle.TrustDomain()
 		logrus.Infof("id trustDomain: %s", id)
-		tlsConfig, err := GetTLSConfigByID(ctx, id)
+		tlsConfig, err := GetTLSConfigByID(id)
 		if err != nil {
 			logrus.Errorf("Failed to fetch tlsConfig for Trust Domain: %v", id)
 			return nil, err

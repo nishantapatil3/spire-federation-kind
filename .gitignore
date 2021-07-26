@@ -6,3 +6,5 @@
 .vscode
 .DS_Store
 
+docker/broker-webapp/broker-webapp
+docker/stock-quotes-service/stock-quotes-service
