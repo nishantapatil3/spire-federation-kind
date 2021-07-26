@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # set $cluster1 and $cluster2 kubeconfig
-source ~/lab_clusters.sh
+echo "Setting clusters kubeconfig $(pwd)/lab_clusters.sh"
+source $(pwd)/lab_clusters.sh
 
 function register_spire_entry() {
     local kind_config=$1; shift
