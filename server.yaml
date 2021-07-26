@@ -8,9 +8,9 @@ metadata:
 apiVersion: v1 
 kind: Service 
 metadata: 
-  name:  helloworld-example 
+  name:  stock-quotes-service
   labels: 
-    app:  helloworld-example 
+    app:  stock-quotes-service
     nsm/role: client 
 spec: 
   type: LoadBalancer
@@ -20,29 +20,29 @@ spec:
     nodePort: 30036
     name: http 
   selector: 
-    app:  helloworld-example 
+    app:  stock-quotes-service
 --- 
 apiVersion: apps/v1 
 kind: Deployment 
 metadata: 
-  name:  helloworld-example 
+  name:  stock-quotes-service
   labels: 
     version: v1 
 spec: 
   replicas: 1 
   selector: 
     matchLabels: 
-      app:  helloworld-example 
+      app:  stock-quotes-service
       version: v1 
   template: 
     metadata: 
       labels: 
-        app:  helloworld-example 
+        app:  stock-quotes-service
         version: v1 
     spec: 
       serviceAccount: server-service-account 
       containers: 
-      - name: helloworld 
+      - name: stock-quotes
         image: nishantapatil3/stock-quotes-service:latest
         command: ["/usr/local/bin/stock-quotes-service","infinity"] 
         resources: 
