@@ -23,8 +23,5 @@ function register_spire_entry() {
            ${federates_with_arg}
 }
 
-register_spire_entry $cluster1 "spire-server" "spire-agent" "server" "cluster1.com" 
-#"-federatesWith spiffe://cluster2.com"
-register_spire_entry $cluster1 "spire-server" "spire-agent" "client" "cluster1.com" 
-#"-federatesWith spiffe://cluster2.com"
+register_spire_entry $cluster1 "spire-server" "spire-agent" "server" "cluster1.com" "-federatesWith spiffe://cluster2.com"
 register_spire_entry $cluster2 "spire-server" "spire-agent" "client" "cluster2.com" "-federatesWith spiffe://cluster1.com"

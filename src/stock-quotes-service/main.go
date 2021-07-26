@@ -11,7 +11,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/spiffe/go-spiffe/v2/spiffeid"
 	"github.com/spiffe/go-spiffe/v2/spiffetls/tlsconfig"
 	"github.com/spiffe/go-spiffe/v2/workloadapi"
 )
@@ -36,7 +35,7 @@ var (
 		{Symbol: "KKKK"},
 	}
 	quotesMtx      = sync.RWMutex{}
-	brokerSpiffeID = spiffeid.Must("cluster2.com", "webapp")
+	//brokerSpiffeID = spiffeid.Must("cluster2.com", "webapp")
 )
 
 func main() {
@@ -63,6 +62,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	svid, err := x509Src.GetX509SVID()
+	if err != nil || svid == nil {
+		log.Fatalf("Error:%v SVID: %v", err, svid)
+	}
+	trustDomain := svid.ID.TrustDomain()
+	log.Printf("Server Trust domain: %s", trustDomain)
 
 	server := &http.Server{
 		Addr:      fmt.Sprintf(":%d", port),

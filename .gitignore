@@ -1,0 +1,8 @@
+.idea/
+# Emacs backupfiles
+*~
+*.iml
+
+.vscode
+.DS_Store
+
