@@ -12,6 +12,7 @@ function register_spire_entry() {
     local trust_domain=$1; shift
     local federates_with_arg=$1; shift
 
+    echo "-------------------------"
     echo "Registering workload: ${workload_name}"
     kubectl exec -it --kubeconfig ${kind_config} \
        -n spire "${spire_server}-0" \
@@ -22,6 +23,7 @@ function register_spire_entry() {
            -parentID "spiffe://${trust_domain}/${spire_agent}" \
            -selector "k8s:sa:${workload_name}-service-account" \
            ${federates_with_arg}
+    echo "-------------------------"
 }
 
 register_spire_entry $cluster1 "spire-server" "spire-agent" "server" "cluster1.com" "-federatesWith spiffe://cluster2.com"
