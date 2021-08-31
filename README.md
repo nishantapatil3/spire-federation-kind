@@ -83,3 +83,7 @@ Example:
 `kubectl port-forward broker-webapp-85574f4585-cxvxg 8080:8080 --kubeconfig $cluster2`
 
 Open up a browser to http://localhost:8080/quotes and you should see a grid of randomly generated phony stock quotes that are updated every 1 second.
+
+![k9s-view](./images/k9s-view.png)
+![stockbroker-webpage](./images/stockbroker-webpage.png)
+
