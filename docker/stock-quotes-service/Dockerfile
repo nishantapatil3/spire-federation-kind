@@ -1,7 +1,0 @@
-FROM gcr.io/spiffe-io/spire-agent:1.0.0 as spire
-
-COPY stock-quotes-service /usr/local/bin/stock-quotes-service
-
-WORKDIR /opt/spire
-ENTRYPOINT []
-CMD stock-quotes-service
