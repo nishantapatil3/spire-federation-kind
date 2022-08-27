@@ -5,3 +5,8 @@ mkdir -p build
 (cd src/stock-quotes-service && CGO_ENABLED=0 GOOS=linux go build && mv stock-quotes-service ../../build/)
 
 echo "**** Finished building binaries ****"
+
+for entry in "${PWD}"/build/*
+do
+  echo "$entry"
+done
