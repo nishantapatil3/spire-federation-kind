@@ -31,12 +31,14 @@ jobs:
     - name: Build and push - broker-webapp
       uses: docker/build-push-action@v3
       with:
+        context: .
         file: ./docker/broker-webapp/Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/broker-webapp:latest
     - name: Build and push - stock-quotes-service
       uses: docker/build-push-action@v3
       with:
+        context: .
         file: ./docker/stock-quotes-service/Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/stock-quotes-service:latest
