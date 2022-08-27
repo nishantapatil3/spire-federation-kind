@@ -4,4 +4,5 @@ COPY stock-quotes-service /usr/local/bin/stock-quotes-service
 
 WORKDIR /opt/spire
 ENTRYPOINT []
+
 CMD stock-quotes-service
