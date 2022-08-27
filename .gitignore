@@ -5,3 +5,6 @@
 
 .vscode
 .DS_Store
+
+# Binaries
+build
