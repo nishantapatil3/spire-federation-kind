@@ -52,6 +52,11 @@ kind get kubeconfig --name=kind-1 > ~/kubeconfigs/kind-1.kubeconfig
 kind get kubeconfig --name=kind-2 > ~/kubeconfigs/kind-2.kubeconfig
 ```
 
+Add $cluster1 and $cluster2 to your env
+```
+source lab_clusters.sh
+```
+
 Wait until the clusters deploy on your setup, then deploy metallb for load balancing such that two clusters
 can reach each other by their external IP's
 ```bash
@@ -64,6 +69,8 @@ Deploy spire server and agent
 helm template helm/spire --set trustDomain=cluster1.com --set federatesWith[0].trustDomain=cluster2.com --set federatesWith[0].address=172.17.254.1 --set federatesWith[0].port=8443 | kubectl apply --kubeconfig $cluster1 -f -
 helm template helm/spire --set trustDomain=cluster2.com --set federatesWith[0].trustDomain=cluster1.com --set federatesWith[0].address=172.17.255.1 --set federatesWith[0].port=8443 | kubectl apply --kubeconfig $cluster2 -f -
 ```
+
+> **Note:** if using zsh append `noglob` before `helm command`
 
 Run the following command to [bootstrap the federation](https://github.com/spiffe/spire-tutorials/blob/master/docker-compose/federation/README.md#bootstrap-federation):
 ```bash
