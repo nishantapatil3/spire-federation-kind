@@ -2,8 +2,7 @@
 
 [![Release Actions status](https://github.com/nishantapatil3/spire-federation-kind/workflows/Release/badge.svg)](https://github.com/nishantapatil3/spire-federation-kind/actions/workflows/release.yml)
 
-[![Docker](https://badgen.net/badge/icon/docker?icon=docker&label=broker-webapp)](https://hub.docker.com/r/nishantapatil3/broker-webapp)
-[![Docker](https://badgen.net/badge/icon/docker?icon=docker&label=stock-quotes-service)](https://hub.docker.com/r/nishantapatil3/stock-quotes-service)
+[![Docker](https://badgen.net/badge/icon/docker?icon=docker&label=spire-federation-kind)](https://hub.docker.com/r/nishantapatil3/spire-federation-kind)
 
 
 Spire Federation provides zero trust security of workloads in kubernetes clusters and is wide adopted by cloud service
