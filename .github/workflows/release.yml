@@ -28,17 +28,10 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
-    - name: Build and push - broker-webapp
+    - name: Build and push - Docker
       uses: docker/build-push-action@v3
       with:
         context: .
-        file: docker/Dockerfile.broker-webapp
+        file: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/broker-webapp:latest
-    - name: Build and push - stock-quotes-service
-      uses: docker/build-push-action@v3
-      with:
-        context: .
-        file: docker/Dockerfile.stock-quotes-service
-        push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/stock-quotes-service:latest
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/spire-federation-kind:latest

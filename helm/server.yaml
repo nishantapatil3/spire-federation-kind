@@ -43,7 +43,7 @@ spec:
       serviceAccount: server-service-account 
       containers: 
       - name: stock-quotes
-        image: nishantapatil3/stock-quotes-service:latest
+        image: docker.io/nishantapatil3/spire-federation-kind:latest
         command: ["/usr/local/bin/stock-quotes-service","infinity"] 
         resources: 
           requests: 

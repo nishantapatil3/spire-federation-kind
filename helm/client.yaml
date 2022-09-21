@@ -43,7 +43,7 @@ spec:
       serviceAccount: client-service-account 
       containers: 
       - name: webapp
-        image: nishantapatil3/broker-webapp:latest
+        image: docker.io/nishantapatil3/spire-federation-kind:latest
         command: ["/usr/local/bin/broker-webapp","infinity"] 
         resources: 
           requests: 
