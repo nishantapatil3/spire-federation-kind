@@ -5,6 +5,8 @@
 [![Docker](https://badgen.net/badge/icon/docker?icon=docker&label=spire-federation-kind)](https://hub.docker.com/r/nishantapatil3/spire-federation-kind)
 
 
+Check out this Cisco Blog for Intro on: [SPIFFE/SPIRE Federation on Kind clusters](https://outshift.cisco.com/blog/spire-federation-kind)
+
 Spire Federation provides zero trust security of workloads in kubernetes clusters and is wide adopted by cloud service
 providers.
 
