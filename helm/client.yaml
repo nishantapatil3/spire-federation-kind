@@ -43,13 +43,16 @@ spec:
       serviceAccount: client-service-account
       containers:
         - name: webapp
-          image: ghcr.io/nishantapatil3/broker-webapp:latest
+          image: ghcr.io/nishantapatil3/spire-federation-kind/broker-webapp:latest
           resources:
             requests:
               cpu: "100m"
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          env:
+            - name: QUOTES_SERVICE_HOST
+              value: "stock-quotes-service" # Use Kubernetes service name instead of IP
           volumeMounts:
             - mountPath: /run/spire/sockets
               name: spire-agent-socket

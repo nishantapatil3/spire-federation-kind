@@ -13,6 +13,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"broker-webapp/quotes"
@@ -23,13 +24,15 @@ import (
 
 const (
 	port              = 8080
-	quotesURL         = "https://172.17.255.2:8090/quotes"
-	target            = "172.17.255.2:8090"
+	defaultQuotesHost = "172.17.255.2"
+	quotesPort        = "8090"
 	socketPath        = "unix:///run/spire/sockets/agent.sock"
 	tlsContextTimeout = 5 * time.Second
 )
 
 var (
+	quotesURL   string
+	target      string
 	latestQuotes = []*quotes.Quote(nil)
 	latestUpdate = time.Now()
 	// Stock quotes provider SPIFFE ID
@@ -37,6 +40,15 @@ var (
 	bundleSrc              *workloadapi.BundleSource
 	clientTlxConfig        *tls.Config
 )
+
+func init() {
+	quotesHost := os.Getenv("QUOTES_SERVICE_HOST")
+	if quotesHost == "" {
+		quotesHost = defaultQuotesHost
+	}
+	quotesURL = fmt.Sprintf("https://%s:%s/quotes", quotesHost, quotesPort)
+	target = fmt.Sprintf("%s:%s", quotesHost, quotesPort)
+}
 
 func main() {
 	log.Print("Webapp waiting for an X.509 SVID...")

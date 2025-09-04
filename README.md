@@ -65,8 +65,17 @@ can reach each other by their external IP's
 ```bash
 helm repo add metallb https://metallb.github.io/metallb
 
-helm template metallb/metallb --set globalPrefix="255" --set addressPrefix="172.17" | kubectl apply --kubeconfig $cluster1 -f -
-helm template metallb/metallb --set globalPrefix="254" --set addressPrefix="172.17" | kubectl apply --kubeconfig $cluster2 -f -
+export KUBECONFIG=$cluster1
+kubectl create ns metallb-system
+helm install metallb metallb/metallb --namespace metallb-system
+
+export KUBECONFIG=$cluster2
+kubectl create ns metallb-system
+helm install metallb metallb/metallb --namespace metallb-system
+unset KUBECONFIG
+
+kubectl apply -f helm/metallb-system/ipaddresspool1.yaml --kubeconfig $cluster1
+kubectl apply -f helm/metallb-system/ipaddresspool2.yaml --kubeconfig $cluster2
 ```
 
 Deploy spire server and agent
