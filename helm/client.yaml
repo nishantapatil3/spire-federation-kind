@@ -52,7 +52,7 @@ spec:
             - containerPort: 8080
           env:
             - name: QUOTES_SERVICE_HOST
-              value: "stock-quotes-service" # Use Kubernetes service name instead of IP
+              value: "172.17.254.2" # Update this IP with stock-quotes-service external IP address
           volumeMounts:
             - mountPath: /run/spire/sockets
               name: spire-agent-socket

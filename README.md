@@ -2,9 +2,6 @@
 
 [![Release Actions status](https://github.com/nishantapatil3/spire-federation-kind/workflows/Release/badge.svg)](https://github.com/nishantapatil3/spire-federation-kind/actions/workflows/release.yml)
 
-[![Docker](https://badgen.net/badge/icon/docker?icon=docker&label=spire-federation-kind)](https://hub.docker.com/r/nishantapatil3/spire-federation-kind)
-
-
 > **Note:** Check out this Cisco Blog for Intro on: [SPIFFE/SPIRE Federation on Kind clusters](https://outshift.cisco.com/blog/spire-federation-kind)
 
 Spire Federation provides zero trust security of workloads in kubernetes clusters and is wide adopted by cloud service
@@ -62,6 +59,10 @@ source lab_clusters.sh
 
 Wait until the clusters deploy on your setup, then deploy metallb for load balancing such that two clusters
 can reach each other by their external IP's
+
+> **Note:** `172.17.*` address might be different on your docker network for kind, check that and replace with your IPAM address in below metallb and spire config.
+Check `docker network inspect kind` on your device
+
 ```bash
 helm repo add metallb https://metallb.github.io/metallb
 
@@ -113,4 +114,3 @@ Open up a browser to http://localhost:8080/quotes and you should see a grid of r
 
 ![k9s-view](./images/k9s-view.png)
 ![stockbroker-webpage](./images/stockbroker-webpage.png)
-

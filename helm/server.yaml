@@ -43,7 +43,7 @@ spec:
       serviceAccount: server-service-account
       containers:
         - name: stock-quotes-service
-          image: ghcr.io/nishantapatil3/stock-quotes-service:latest
+          image: ghcr.io/nishantapatil3/spire-federation-kind/stock-quotes-service:latest
           resources:
             requests:
               cpu: "100m"
