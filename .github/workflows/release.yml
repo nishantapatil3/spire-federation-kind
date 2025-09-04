@@ -37,7 +37,7 @@ jobs:
         context: ./src/broker-webapp
         file: ./src/broker-webapp/Dockerfile
         push: true
-        tags: ghcr.io/${{ github.actor }}:broker-webapp-latest
+        tags: ghcr.io/${{ github.actor }}/broker-webapp-latest
 
     - name: Build and push stock-quotes-service
       uses: docker/build-push-action@v3
