@@ -5,7 +5,7 @@
 [![Docker](https://badgen.net/badge/icon/docker?icon=docker&label=spire-federation-kind)](https://hub.docker.com/r/nishantapatil3/spire-federation-kind)
 
 
-Check out this Cisco Blog for Intro on: [SPIFFE/SPIRE Federation on Kind clusters](https://outshift.cisco.com/blog/spire-federation-kind)
+> **Note:** Check out this Cisco Blog for Intro on: [SPIFFE/SPIRE Federation on Kind clusters](https://outshift.cisco.com/blog/spire-federation-kind)
 
 Spire Federation provides zero trust security of workloads in kubernetes clusters and is wide adopted by cloud service
 providers.
@@ -35,10 +35,11 @@ Before proceeding, review the following system requirements:
 
 ## Build
 
-Ensure that the current working directory is spire-federation-kind and run the following command to build and
-push docker images
+**Note:** There are some known issues with Mac's Docker networking and kind clusters's metallb networking being incompatible, so this article is written for `linux/amd64` platform and Docker images are built for `linux/amd64` by default.
 
-Note: replace docker image push with your cloud repository
+Ensure that the current working directory is spire-federation-kind and run the following command to build
+
+Optionally: push containers to your cloud repository.
 
 ```bash
 $ ./build.sh
@@ -49,9 +50,9 @@ Create two kind clusters
 kind create cluster --name kind-1
 kind create cluster --name kind-2
 
-mkdir -p ~/kubeconfigs
-kind get kubeconfig --name=kind-1 > ~/kubeconfigs/kind-1.kubeconfig
-kind get kubeconfig --name=kind-2 > ~/kubeconfigs/kind-2.kubeconfig
+mkdir -p $PWD/kubeconfigs
+kind get kubeconfig --name=kind-1 > $PWD/kubeconfigs/kind-1.kubeconfig
+kind get kubeconfig --name=kind-2 > $PWD/kubeconfigs/kind-2.kubeconfig
 ```
 
 Add $cluster1 and $cluster2 to your env
@@ -62,8 +63,10 @@ source lab_clusters.sh
 Wait until the clusters deploy on your setup, then deploy metallb for load balancing such that two clusters
 can reach each other by their external IP's
 ```bash
-helm template helm/metallb-system --set globalPrefix="255" | kubectl apply --kubeconfig $cluster1 -f -
-helm template helm/metallb-system --set globalPrefix="254" | kubectl apply --kubeconfig $cluster2 -f -
+helm repo add metallb https://metallb.github.io/metallb
+
+helm template metallb/metallb --set globalPrefix="255" --set addressPrefix="172.17" | kubectl apply --kubeconfig $cluster1 -f -
+helm template metallb/metallb --set globalPrefix="254" --set addressPrefix="172.17" | kubectl apply --kubeconfig $cluster2 -f -
 ```
 
 Deploy spire server and agent

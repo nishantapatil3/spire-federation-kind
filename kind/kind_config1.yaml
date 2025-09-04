@@ -5,8 +5,8 @@ networking:
   apiServerAddress: "127.0.0.1"
   apiServerPort: 8443
 nodes:
-- role: control-plane
-  #image: kindest/node:v1.27.3
-  extraPortMappings:
-  - containerPort: 6443
-    hostPort: 8081 # maps to spire server on kind-1 cluster
+  - role: control-plane
+    #image: kindest/node:v1.27.3
+    extraPortMappings:
+      - containerPort: 6443
+        hostPort: 8081 # maps to spire server on kind-1 cluster

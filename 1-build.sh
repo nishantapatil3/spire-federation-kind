@@ -1,12 +1,13 @@
 #!/bin/bash
 
-mkdir -p build
-(cd src/broker-webapp && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build && mv broker-webapp ../../build/)
-(cd src/stock-quotes-service && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build && mv stock-quotes-service ../../build/)
+# Build broker container
+docker build --file src/broker-webapp/Dockerfile -t ghcr.io/nishantapatil3/broker-webapp:latest src/broker-webapp/
 
-echo "**** Finished building binaries ****"
+# Build stock-quotes container
+docker build --file src/broker-webapp/Dockerfile -t ghcr.io/nishantapatil3/stock-quotes-service:latest src/stock-quotes-service/
 
-for entry in "${PWD}"/build/*
-do
-  echo "$entry"
-done
+# Push broker container
+docker push ghcr.io/nishantapatil3/broker-webapp:latest
+
+# Push stock-quotes container
+docker push ghcr.io/nishantapatil3/stock-quotes-service:latest

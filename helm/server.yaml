@@ -1,62 +1,61 @@
---- 
-apiVersion: v1 
-kind: ServiceAccount 
-metadata: 
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
   name: server-service-account
-  namespace: default 
---- 
-apiVersion: v1 
-kind: Service 
-metadata: 
-  name:  stock-quotes-service
-  labels: 
-    app:  stock-quotes-service
-    nsm/role: client 
-spec: 
+  namespace: default
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stock-quotes-service
+  labels:
+    app: stock-quotes-service
+    nsm/role: client
+spec:
   type: LoadBalancer
-  ports: 
-  - port:  8090
-    targetPort: 8090
-    nodePort: 30036
-    name: http 
-  selector: 
-    app:  stock-quotes-service
---- 
-apiVersion: apps/v1 
-kind: Deployment 
-metadata: 
-  name:  stock-quotes-service
-  labels: 
-    version: v1 
-spec: 
-  replicas: 1 
-  selector: 
-    matchLabels: 
-      app:  stock-quotes-service
-      version: v1 
-  template: 
-    metadata: 
-      labels: 
-        app:  stock-quotes-service
-        version: v1 
-    spec: 
-      serviceAccount: server-service-account 
-      containers: 
-      - name: stock-quotes
-        image: docker.io/nishantapatil3/spire-federation-kind:latest
-        command: ["/usr/local/bin/stock-quotes-service","infinity"] 
-        resources: 
-          requests: 
-            cpu: "100m" 
-        imagePullPolicy: Always
-        ports: 
-        - containerPort: 8090
-        volumeMounts:
-        - mountPath: /run/spire/sockets
-          name: spire-agent-socket
-          readOnly: true
+  ports:
+    - port: 8090
+      targetPort: 8090
+      nodePort: 30036
+      name: http
+  selector:
+    app: stock-quotes-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-quotes-service
+  labels:
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stock-quotes-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: stock-quotes-service
+        version: v1
+    spec:
+      serviceAccount: server-service-account
+      containers:
+        - name: stock-quotes-service
+          image: ghcr.io/nishantapatil3/stock-quotes-service:latest
+          resources:
+            requests:
+              cpu: "100m"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8090
+          volumeMounts:
+            - mountPath: /run/spire/sockets
+              name: spire-agent-socket
+              readOnly: true
       volumes:
-      - name: spire-agent-socket
-        hostPath:
-          path: /run/spire/sockets
-          type: DirectoryOrCreate
+        - name: spire-agent-socket
+          hostPath:
+            path: /run/spire/sockets
+            type: DirectoryOrCreate
