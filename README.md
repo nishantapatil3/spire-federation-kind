@@ -97,9 +97,19 @@ Run the following command to create [workload registration entries](https://gith
 ./3-register.sh
 ```
 
-Deploy Server and client
+Deploy Server
 ```bigquery
 kubectl apply -f helm/server.yaml --kubeconfig $cluster1
+```
+Deploy client
+
+> Note: Update this field in client.yaml after checking the correct IP address of server (this may change based on your MetalLB config)
+```
+env:
+- name: QUOTES_SERVICE_HOST
+    value: "172.17.254.2" # Update this IP with stock-quotes-service external IP address
+```
+```
 kubectl apply -f helm/client.yaml --kubeconfig $cluster2
 ```
 
